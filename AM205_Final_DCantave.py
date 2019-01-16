@@ -1,8 +1,6 @@
 
 # coding: utf-8
 
-# In[1]:
-
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,8 +13,6 @@ from operator import attrgetter
 from copy import deepcopy
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-
-# In[2]:
 
 
 """ SIMULATING DATA FROM ODE SYSTEM 
@@ -70,8 +66,6 @@ def find_path(init, n, theta):
         path[k,1]=path[k-1,1]+h*dx2(path[k-1,0],path[k-1,1],n,theta)
     return path
 
-
-# In[8]:
 
 
 """ GRAPHING TRAJECTORIES AND ADDING NOISE
@@ -140,8 +134,6 @@ fig.savefig('noisy.png')
 plt.show(fig)
 
 
-# In[4]:
-
 
 """ FINDING BIFURCATION POINTS 
     repeat trajectory calculation and graphing for incrementally
@@ -185,8 +177,6 @@ plt.tight_layout()
 plt.show(bi_fig)
 bi_fig.savefig('bifurcation.png')
 
-
-# In[10]:
 
 
 """ GRAPHING PARAMETER SPACE AND ERROR 
@@ -240,8 +230,6 @@ for k in range(4):
     print("parameter set {} complete!".format(n_theta[k]))
 
 
-# In[11]:
-
 
 # graph on meshgrid
 nn,tt=np.meshgrid(ns,thetas)
@@ -261,8 +249,6 @@ plt.tight_layout()
 fig.savefig('parameterspace_1.png')
 plt.show(fig)
 
-
-# In[12]:
 
 
 # focusing only on combinations with small error measures
@@ -289,16 +275,12 @@ fig.savefig('parameterspace_2.png')
 plt.show(fig)
 
 
-# In[13]:
-
 
 # calculate actual error between correct parameter values and noisy data
 print("actual error between correct parameter values and noisy data")
 for i in range(4):
     print('n={}, th={}, err={}'.format(*n_theta[i],find_error(*n_theta[i],X[i])))
 
-
-# In[15]:
 
 
 """ STEEPEST DESCENT ALGORITHM 
@@ -369,8 +351,6 @@ def steepest_descent(x0,X):
     return xk,find_error(*xk,X)
 
 
-# In[18]:
-
 
 """ RUNNING STEEPEST DESCENT 
     for each n/theta combination:
@@ -397,8 +377,6 @@ for j in range(4):
     print('squared dist: ', np.linalg.norm(best_nth_sd-n_theta[j])**2)
     print('Run-time: ', end-start)
 
-
-# In[ ]:
 
 
 """ BFGS ALGORITHM 
@@ -453,8 +431,6 @@ def BFGS(x0,X):
     return xk,find_error(*xk,X)
 
 
-# In[ ]:
-
 
 """ RUNNING BFGS
     for each n/theta combination:
@@ -481,8 +457,6 @@ for j in range(4):
     print('squared dist: ', np.linalg.norm(best_nth_bfgs-n_theta[j])**2)
     print('Run-time: ', end-start)
 
-
-# In[ ]:
 
 
 """ GENETIC ALGORITHM """
@@ -612,8 +586,6 @@ def GA(NGEN,POP,CXPB,MUTPB,X):
     return best.pars,-best.fitness
 
 
-# In[ ]:
-
 
 """ RUN GENETIC ALGORITHM
     variables: number of generations, population size, cross over probability,
@@ -653,8 +625,6 @@ for k in range(4):
     print('squared dist: ', np.linalg.norm(best_nth_GA-n_theta[k])**2)
     print('Run-time: ', end1-start1)
 
-
-# In[ ]:
 
 
 """ RUN GA + SD
